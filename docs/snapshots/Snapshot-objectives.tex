@@ -1,0 +1,46 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+% Week 14 Styling
+\titleformat{\section}[block]{\huge\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[runin]{\large\itshape}{\thesubsection}{1em}{}
+
+\title{\textbf{Snapshot Objectives}\\ \Large Lunar Rocks!}
+\author{Group 5}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Snapshot 1: Start Objective}
+Our primary goal for the start of the project is to establish a cost-effective and scalable architecture. The previous iteration of the system utilized Prisma ORM, which incurred high monthly costs. Our objective for this phase is to migrate the backend to a \textbf{Java Web Service} environment and establish a strictly relational \textbf{PostgreSQL} database to eliminate these costs.
+
+\subsection{Front-End Goals}
+We will initialize the client-side application using \textbf{React} and \textbf{Vite}. This combination was chosen for its component-based architecture, allowing us to reuse UI elements across the Scouting and Sizing tasks. We aim to implement the Landing Page, Login/Registration portal, and the basic "Explore" dashboard grid.
+
+\subsection{Back-End Goals}
+We will replace the legacy Node.js backend with a \textbf{Java Jakarta EE} server running on Apache Tomcat. This involves setting up the core servlets to handle HTTP requests and establishing a JDBC connection to our new PostgreSQL database.
+
+\section{Snapshot 2: Checkpoint 1}
+With the core infrastructure in place, our objective shifts to implementing the first two scientific tasks: Scouting and Sizing. These are critical for processing the raw lunar images provided by NASA JPL.
+
+\subsection{Scouting Implementation}
+We will develop the Scouting interface, which presents users with a segmented grid of lunar images. The goal is to allow users to quickly estimate rock density by selecting range buckets (e.g., $<$100, 100-200 rocks).
+
+\subsection{Sizing Implementation}
+We will integrate the \textbf{Konva.js} library to power the Sizing workspace. This objective involves creating an interactive HTML5 canvas where users can draw precise bounding geometries (circles and lines) around rocks. On the backend, we will enable \textbf{PostGIS} extensions in our database to efficiently store these complex spatial data types.
+
+\section{Snapshot 3: Last Checkpoint}
+For the final release, we aim to complete the user workflow with the Classification task and provide administrative tools for data analysis.
+
+\subsection{Classification \& Polish}
+We will implement the Classification interface, which allows users to tag pre-identified rocks with morphological shapes (Angular, Sub-Angular, Rounded). We will also focus on UI responsiveness to ensure the drawing tools work seamlessly on mobile devices.
+
+\subsection{Future Work \& Admin}
+We will deploy an \textbf{Admin Dashboard} that aggregates citizen science data. Future objectives that we identified but could not complete in this timeline include implementing a "Reliability Score" to weight contributions from experienced users more heavily, and a "Group Collaboration" feature to allow teams to work on single images together.
+
+\end{document}
