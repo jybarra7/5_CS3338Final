@@ -1,0 +1,241 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Formatting setup
+\geometry{a4paper, margin=1in}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
+
+% Title Page Information
+\title{\textbf{Software Requirements Specification (SRS)}\\ \Large Lunar Rocks!}
+\author{Group 5}
+\date{\today}
+
+\begin{document}
+
+% --- COVER PAGE ---
+\maketitle
+\thispagestyle{empty}
+\vspace{5cm}
+\begin{center}
+    \textbf{Version 1.2} \\
+    CS 3338 - Snapshot 3
+\end{center}
+\newpage
+
+% --- TABLE OF CONTENTS ---
+\tableofcontents
+\newpage
+
+% --- VERSION DESCRIPTION ---
+\section*{Version Description}
+\addcontentsline{toc}{section}{Version Description}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|l|X|l|}
+        \hline
+        \textbf{Version} & \textbf{Date} & \textbf{Description} & \textbf{Author} \\
+        \hline
+        1.0 & \today & Initial SRS draft for Snapshot 1. Requirements defined. & Group 5 \\
+        \hline
+        1.1 & \today & Snapshot 2 update: adds authentication/dashboard workflow, dependencies, and artifact references. & Group 5 \\
+        \hline
+        1.2 & \today & Snapshot 3 update: adds task execution, validation, submission requirements, and artifact references. & Group 5 \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\newpage
+
+% --- SECTION 1: INTRODUCTION ---
+\section{Introduction}
+
+\subsection{Purpose}
+The purpose of this Software Requirements Specification (SRS) is to outline the functional and external interface requirements for the Lunar Rocks! system. It defines the scope, expected behavior, and constraints of the software for development.
+
+\subsection{Intended Audience}
+This document is intended for:
+\begin{itemize}
+    \item Software developers working on frontend, backend, or database components.
+    \item Project managers overseeing progress and requirements.
+    \item QA testers evaluating whether the system meets specifications.
+\end{itemize}
+
+\subsection{Overview of the Software}
+Lunar Rocks! is a web-based citizen science tool enabling users to analyze lunar images from NASA missions. The application allows users to register, log in, scout images, size rocks, classify rock shapes, and submit results to a centralized scientific dataset.
+
+\subsection{Definitions, Acronyms, Abbreviations}
+\begin{itemize}
+    \item \textbf{SRS} — Software Requirements Specification  
+    \item \textbf{UI} — User Interface  
+    \item \textbf{API} — Application Programming Interface  
+    \item \textbf{DB} — Database  
+    \item \textbf{NASA} — National Aeronautics and Space Administration  
+\end{itemize}
+
+\newpage
+
+% --- SECTION 2: EXTERNAL INTERFACE REQUIREMENTS ---
+\section{External Interface Requirements}
+
+\subsection{User Interface}
+
+The system uses a clean, accessible interface inspired by USWDS and NASA design language. Below are the core UI components used in the Lunar Rocks! system.
+
+% IMAGE 1
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2.1UserInterfaces}
+    \caption{Button Components}
+\end{figure}
+
+% IMAGE 2
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2.1.1UserInterfaces}
+    \caption{Alert Components}
+\end{figure}
+
+% IMAGE 3
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2.1.2UserInterfaces}
+    \caption{Radio Buttons and Tile Selection}
+\end{figure}
+
+% IMAGE 4
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2.1.3UserIntefaces}
+    \caption{Select Menu and Site Alerts}
+\end{figure}
+
+% IMAGE 5
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2.1.4UserInterfaces}
+    \caption{Step Indicators and Tags}
+\end{figure}
+
+% IMAGE 6
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2.1.5UserInterfaces}
+    \caption{Text Inputs and Example Mockups}
+\end{figure}
+
+\subsection{Software Interfaces}
+The system interacts with:
+\begin{itemize}
+    \item A Java backend service running on Tomcat.
+    \item A PostgreSQL database containing user, image, and rock classification data.
+    \item NASA-hosted image datasets (future expansion).
+\end{itemize}
+
+\subsection{Communications Interfaces}
+\begin{itemize}
+    \item HTTPS for secure client-server communication.
+    \item Email contact for users needing support.
+\end{itemize}
+
+\newpage
+
+\subsection{Functional Requirements}
+\begin{itemize}
+    \item The system shall allow users to register for an account using an email and password.
+    \item The system shall allow registered users to log in and log out.
+    \item The system shall restrict access to task pages to authenticated users.
+    \item The system shall provide an authenticated dashboard page that lists available tasks and allows users to begin a task.
+\end{itemize}
+
+\subsection{External Interface Requirements}
+
+\subsubsection{Login and Registration UI}
+The system shall provide a login/registration interface that:
+\begin{itemize}
+    \item collects credentials securely,
+    \item provides clear success/failure feedback, and
+    \item redirects authenticated users to the dashboard.
+\end{itemize}
+
+\subsubsection{Dashboard UI}
+The system shall provide a dashboard interface that:
+\begin{itemize}
+    \item is accessible only after login,
+    \item displays entry points to scouting, sizing, and classification, and
+    \item provides basic user navigation (e.g., return to Home, log out).
+\end{itemize}
+
+\subsection{Dependencies and Libraries}
+\begin{itemize}
+    \item Password hashing library (e.g., bcrypt or equivalent)
+    \item Authentication/session mechanism (session cookies or token-based auth)
+\end{itemize}
+
+\subsection{Functional Requirements}
+\begin{itemize}
+    \item The system shall allow authenticated users to perform scouting tasks and submit rock count estimates.
+    \item The system shall allow authenticated users to perform sizing tasks using interactive measurement tools.
+    \item The system shall allow authenticated users to perform classification tasks using predefined shape categories.
+    \item The system shall validate user input prior to accepting task submissions.
+    \item The system shall persist validated task results in the database.
+\end{itemize}
+
+\subsection{External Interface Requirements}
+
+\subsubsection{Task Interaction Interfaces}
+Each task interface (scouting, sizing, and classification) shall provide task-specific interaction tools,
+clear instructions, and feedback to guide users through task completion. The interface shall also
+provide validation feedback when user input is incomplete or invalid.
+
+\section{Legal and Ethical Considerations}
+
+\subsection{Data Privacy}
+\begin{itemize}
+    \item User accounts require only minimal personal information.
+    \item Passwords must be securely hashed.
+    \item No user-generated scientific data is linked to identifiable personal information.
+\end{itemize}
+
+\subsection{Accessibility}
+The system follows WCAG and USWDS guidance:
+\begin{itemize}
+    \item Adequate color contrast.
+    \item Keyboard navigability.
+    \item Descriptive labels and alt-text for all images.
+\end{itemize}
+
+\subsection{Ethical Use}
+\begin{itemize}
+    \item Citizen science contributions must be used responsibly.
+    \item Data must be preserved with integrity for scientific use.
+\end{itemize}
+
+\newpage
+
+% --- SECTION 4: GLOSSARY ---
+\section{Glossary}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \textbf{Acronym} & \textbf{Definition} \\
+        \hline
+        UI & User Interface \\
+        API & Application Programming Interface \\
+        DB & Database \\
+        WCAG & Web Content Accessibility Guidelines \\
+        NASA & National Aeronautics and Space Administration \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\end{document}
