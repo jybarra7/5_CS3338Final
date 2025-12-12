@@ -1,0 +1,220 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Formatting setup
+\geometry{a4paper, margin=1in}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
+
+% Title Page Information
+\title{\textbf{Software Design Document (SDD)}\\ \Large Lunar Rocks!}
+\author{Group 5}
+\date{\today}
+
+\begin{document}
+
+% --- COVER PAGE ---
+\maketitle
+\thispagestyle{empty}
+\vspace{5cm}
+\begin{center}
+    \textbf{Version 1.0} \\
+    CS 3338 - Snapshot 1
+\end{center}
+\newpage
+
+% --- TABLE OF CONTENTS ---
+\tableofcontents
+\newpage
+
+% --- VERSION DESCRIPTION ---
+\section*{Version Description}
+\addcontentsline{toc}{section}{Version Description}
+
+\begin{table}[h]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|l|X|l|}
+        \hline
+        \textbf{Version} & \textbf{Date} & \textbf{Description} & \textbf{Author} \\
+        \hline
+        1.0 & \today & Initial Design for Snapshot 1. Architecture definition and DB Schema V1. & Group 5 \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\newpage
+
+% --- SECTION 1: INTRODUCTION ---
+\section{Introduction}
+
+\subsection{Purpose of the Document}
+The purpose of this Software Design Document (SDD) is to provide a comprehensive architectural overview of the "Lunar Rocks!" system. It details the system architecture, data flow, user interface design, and database schema to guide the development process for Snapshot 1.
+
+\subsection{Intended Audience}
+This document is designed for the internal development team (Backend and Frontend engineers) and the Faculty Advisor to understand the technical implementation details.
+
+\subsection{Overview of the System}
+"Lunar Rocks!" is a full-stack web application. It transitions from a previous legacy Node.js/Prisma stack to a more robust Java/PostgreSQL architecture to reduce costs and improve performance. The system facilitates the interaction between Citizen Scientists (users) and the lunar image database provided by NASA JPL.
+
+% --- SECTION 2: SYSTEM ARCHITECTURE ---
+\section{System Architecture}
+
+\subsection{Workflow of the System}
+The system follows a standard client-server architecture:
+\begin{enumerate}
+    \item \textbf{Client-Side (Frontend):} Built with React and Vite. It handles user interactions, image rendering (via Konva.js for drawing tools), and sends HTTP requests to the backend.
+    \item \textbf{Server-Side (Backend):} A Java Web Service running on Apache Tomcat. It uses Java Jakarta EE and Servlets to process API requests.
+    \item \textbf{Database:} PostgreSQL with PostGIS extensions. The Java backend communicates with the database via direct SQL queries (JDBC).
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{assets/3338Diagram.png}
+    \caption{High-level workflow of the Lunar Rocks! system}
+    \label{fig:lunar-workflow}
+\end{figure}
+
+\subsection{Data Flow Diagrams}
+
+% ---- Level 0 DFD placeholder ----
+\begin{figure}[H]
+    \centering
+    % ensure the file Level0DFD.png (or .jpg) is in the same folder
+    \includegraphics[width=0.75\textwidth]{Level0DFD}
+    \caption{Level 0 Data Flow Diagram for Lunar Rocks!}
+\end{figure}
+
+% ---- Level 1 DFD placeholder ----
+\begin{figure}[H]
+    \centering
+    % ensure the file Level1DFD.png (or .jpg) is in the same folder
+    \includegraphics[width=\textwidth]{Level1DFD}
+    \caption{Level 1 Data Flow Diagram for Lunar Rocks!}
+\end{figure}
+
+\subsection{Component Breakdown}
+\begin{itemize}
+    \item \textbf{Frontend:}
+    \begin{itemize}
+        \item \texttt{React.js}: Component-based UI structure.
+        \item \texttt{TailwindCSS}: Styling and responsiveness.
+        \item \texttt{Konva}: Canvas manipulation for Sizing tasks.
+    \end{itemize}
+    \item \textbf{Backend:}
+    \begin{itemize}
+        \item \texttt{Java}: Core logic language.
+        \item \texttt{Tomcat}: Web server environment.
+        \item \texttt{Jakarta EE}: Enterprise features for web services.
+    \end{itemize}
+\end{itemize}
+
+% --- SECTION 3: USER INTERFACE ---
+\section{User Interface}
+
+\subsection{How to Use the System}
+\begin{enumerate}
+    \item \textbf{Login/Registration:} Users arrive at the landing page and authenticate via the "Sign In" portal (supporting email or social login).
+    \item \textbf{Dashboard:} Upon login, users are presented with the "Explore" page where they select a task (Scout, Size, or Classify).
+    \item \textbf{Task Execution:}
+    \begin{itemize}
+        \item \textit{Scouting:} The user views a grid of images and selects a range representing the rock count.
+        \item \textit{Sizing:} The user utilizes mouse/touch input to draw shapes around rocks. Tools include Undo, Redo, and Clear.
+        \item \textit{Classification:} The user selects a highlighted rock and assigns a shape attribute (e.g., Rounded).
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Screen Frameworks (Screenshots)}
+
+% Home / Landing page
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{8.2ScreenFrameworks}
+    \caption{Home page layout}
+\end{figure}
+
+% About Us page
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{8.2.1ScreenFrameworks}
+    \caption{About Us page}
+\end{figure}
+
+% FAQ + Contact
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{8.2.2ScreenFrameworks}
+    \caption{FAQ and Contact pages}
+\end{figure}
+
+% Explore + Admin
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{8.2.3ScreenFrameworks}
+    \caption{Explore Tasks and Admin Dashboard}
+\end{figure}
+
+% Scouting / Sizing / Classification tasks
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{8.2.4ScreenFrameworks}
+    \caption{Example task screens: Scouting, Sizing, and Classification}
+\end{figure}
+
+\subsection{Database Design and Explanation}
+The database utilizes PostgreSQL. Key tables include:
+\begin{itemize}
+    \item \textbf{Users:} Stores \texttt{id}, \texttt{username}, \texttt{password} (hashed), and \texttt{role}.
+    \item \textbf{Images:} Stores metadata about lunar images including \texttt{image\_url}, \texttt{resolution}, and \texttt{capture\_date}.
+    \item \textbf{UserGeometry:} Stores the spatial data drawn by users during the sizing task (PostGIS geometry types).
+    \item \textbf{Classifications:} Links specific rocks to user-selected shape categories.
+\end{itemize}
+
+% ---- Database diagram placeholder ----
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{DatabaseDesign}
+    \caption{Proposed Database Schema for Lunar Rocks!}
+\end{figure}
+
+% --- SECTION 4: GLOSSARY ---
+\section{Glossary}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \textbf{Acronym} & \textbf{Definition} \\
+        \hline
+        UI & User Interface \\
+        \hline
+        API & Application Programming Interface \\
+        \hline
+        DB & Database \\
+        \hline
+        SQL & Structured Query Language \\
+        \hline
+        PostGIS & Spatial Database Extender for PostgreSQL \\
+        \hline
+        ORM & Object-Relational Mapping \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+% --- SECTION 5: REFERENCES ---
+\section{References}
+
+\begin{enumerate}
+    \item Previous Team SRS/SDD: ``Viper Rocks! Software Requirements and Design.'' 
+    \item JPL Design System: \url{https://www.jpl.nasa.gov/brand}
+    \item React Documentation: \url{https://react.dev/}
+    \item PostGIS Documentation: \url{https://postgis.net/}
+\end{enumerate}
+
+\end{document}
