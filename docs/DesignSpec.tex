@@ -1,0 +1,68 @@
+\section{System Overview}
+
+The Lunar Rocks! system is a containerized web application designed to support task data submission workflows. 
+In Snapshot 1, the system focuses on backend API functionality, container orchestration, and a clearly defined 
+request flow.
+
+The application uses a Node.js backend running inside Docker, exposing REST endpoints that allow clients to 
+retrieve available tasks and submit task-related data.
+
+\section{System Components}
+
+\subsection{Frontend}
+In Snapshot 1, a dedicated frontend is not yet implemented. 
+Requests are validated using browser based tools such as curl or a web browser. 
+Future snapshots will introduce a user facing interface.
+
+\subsection{Backend}
+The backend is implemented using Node.js with the Express framework. 
+It provides RESTful endpoints for:
+\begin{itemize}
+  \item Health checks
+  \item Task retrieval
+  \item Submission of task data
+\end{itemize}
+
+Submissions are stored in memory for Snapshot 1 and will later be migrated to persistent storage.
+
+\subsection{Data Storage}
+No external database is used in Snapshot 1. 
+All submissions are stored in an inmemory data structure within the backend service.
+
+\section{Workflow Description}
+
+Figure~\ref{fig:workflow} illustrates the system workflow. 
+A user initiates a request to the backend API through the exposed service port. 
+Docker routes the request to the Node.js backend container, where Express processes the request and returns a JSON 
+response.
+
+Task data submissions follow the same flow and are validated before being recorded in memory.
+
+\section{Docker and Deployment}
+
+The system is deployed using Docker Compose. 
+A single backend service is defined, exposing port 3000 and running the Node.js application inside a container.
+
+Docker ensures environment consistency and simplifies deployment across systems.
+
+\section{Dependencies and Libraries}
+
+The primary technologies used include:
+\begin{itemize}
+  \item Node.js
+  \item Express.js
+  \item Docker
+  \item Docker Compose
+\end{itemize}
+
+These tools were selected to ensure portability, simplicity, and scalability.
+
+\section{Future Enhancements}
+
+Future snapshots will introduce:
+\begin{itemize}
+  \item Persistent database storage
+  \item A frontend user interface
+  \item Automated testing and reporting
+\end{itemize}
+
