@@ -1,0 +1,314 @@
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=blue,
+  citecolor=black
+}
+
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% ---------------- Cover Page ----------------
+\begin{titlepage}
+    \centering
+    \vspace*{1.5cm}
+
+    {\LARGE \textbf{Software Design Document (SDD)}\par}
+    \vspace{0.5cm}
+    {\Large \textbf{Lunar Rocks!}\par}
+
+    \vspace{1.5cm}
+
+    {\large Version 1.1\par}
+    \vspace{0.25cm}
+    {\large CS 3338 -- Lab Assignment 14\par}
+
+    \vspace{1.5cm}
+
+    {\large \textbf{Team Name:} Team 5\par}
+
+    \vfill
+
+    {\large \textbf{Date:} \today\par}
+
+\end{titlepage}
+
+% ---------------- Table of Contents ----------------
+\tableofcontents
+\newpage
+
+% ---------------- Version Description ----------------
+\section*{Version Description}
+\addcontentsline{toc}{section}{Version Description}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{10cm}|>{\raggedright\arraybackslash}p{2.5cm}|}
+\hline
+\textbf{Version} & \textbf{Description} & \textbf{Date} \\
+\hline
+1.0 & Initial SDD for Snapshot 1. Includes system overview, architecture, UI description, database summary, glossary, and references. & \today \\
+\hline
+1.1 &
+Snapshot 2: Design expanded to include authenticated user workflows.
+Introduces authentication components, dashboard design, updated system
+workflow, and supporting dependencies. & \today \\
+\hline
+1.2 &
+Snapshot 3: Design extended to support full task execution.
+Defines task interaction components, validation strategy, submission flow,
+and data persistence design for scouting, sizing, and classification tasks. &
+\today \\
+\hline
+1.3 &
+Snapshot 4: Final design update. Incorporates final refinements, testing
+and reflection artifacts, documentation updates, and outlines future
+design enhancements not completed before the due date. &
+\today \\
+\hline
+\end{longtable}
+
+\newpage
+
+% ---------------- Introduction ----------------
+\section{Introduction}
+
+\subsection{Purpose of the Document}
+This Software Design Document (SDD) describes the high-level and component-level
+design of the \textit{Lunar Rocks!} web application. The goal is to provide a clear blueprint
+for implementation, maintenance, and future expansion of the system.
+
+\subsection{Intended Audience}
+This document is intended for:
+\begin{itemize}
+    \item Project stakeholders and sponsors.
+    \item Faculty advisors and course evaluators.
+    \item Future developers who may inherit or extend the codebase.
+    \item QA and documentation team members.
+\end{itemize}
+
+\subsection{Overview of the System}
+\textit{Lunar Rocks!} is a citizen science web platform that allows users to
+\textbf{scout}, \textbf{size}, and \textbf{classify} lunar rocks using image-based tasks.
+The platform is designed to streamline lunar rock analysis and help build
+a unified dataset that supports lunar geology research and mission planning.
+The project evolved from the earlier \textit{VIPER Rocks!} initiative and continues as
+\textit{Lunar Rocks!} even as the VIPER mission direction changed.\footnote{This historical
+context is included for completeness and can be shortened for a strict scope.}
+
+% ---------------- System Architecture ----------------
+\section{System Architecture}
+
+\subsection{Workflow of the System}
+With authentication enabled, the system workflow is updated as follows:
+\begin{enumerate}
+    \item User logs in and accesses the dashboard.
+    \item User selects a task type.
+    \item System loads task-specific interface and data.
+    \item User interacts with the task interface.
+    \item System validates task input.
+    \item User submits task results.
+    \item Backend persists results in the database.
+\end{enumerate}
+
+\subsection{Component Breakdown}
+The system follows a full-stack web architecture with the following major components:
+
+\subsubsection*{Frontend Responsibilities}
+The frontend authentication components are responsible for:
+\begin{itemize}
+    \item Providing registration and login forms
+    \item Performing basic input validation (required fields, formatting)
+    \item Displaying authentication success or error messages
+    \item Redirecting authenticated users to the dashboard
+\end{itemize}
+
+\subsubsection*{Backend Responsibilities}
+The backend authentication components are responsible for:
+\begin{itemize}
+    \item Handling registration, login, and logout requests
+    \item Securely hashing and storing user passwords
+    \item Managing authenticated user sessions
+    \item Enforcing access control for task-related endpoints
+\end{itemize}
+
+\subsubsection*{Database Layer}
+\begin{itemize}
+    \item Uses \textbf{PostgreSQL}, with spatial capabilities supported by \textbf{PostGIS} as needed.
+    \item Stores user accounts, images, task definitions, and task results.
+\end{itemize}
+
+\subsection{Data Flow Summary}
+The conceptual data flow includes:
+\begin{itemize}
+    \item \textbf{User} $\rightarrow$ \textbf{Frontend UI} for task interactions.
+    \item \textbf{Frontend} $\rightarrow$ \textbf{Backend APIs} via HTTP requests.
+    \item \textbf{Backend} $\rightarrow$ \textbf{Database} for persistent storage and retrieval.
+    \item \textbf{Database} $\rightarrow$ \textbf{Backend} $\rightarrow$ \textbf{Frontend} for dashboard and progress views.
+\end{itemize}
+
+% ---------------- User Interface ----------------
+\section{User Interface}
+\subsection{Dashboard Component Design}
+The Dashboard serves as the central navigation hub for authenticated users.
+It provides:
+\begin{itemize}
+    \item Entry points for Scouting, Sizing, and Classification tasks
+    \item Navigation links to informational pages
+    \item User session controls (e.g., log out)
+\end{itemize}
+
+\subsection{Design Dependencies Introduced}
+Introduces the following design dependencies:
+\begin{itemize}
+    \item Password hashing utilities (e.g., bcrypt or equivalent)
+    \item Authentication/session management mechanisms
+\end{itemize}
+
+\subsection{Testing and Documentation Artifacts}
+Design updates are supported by:
+\begin{itemize}
+    \item Objective document outlining the authentication feature
+    \item TestRail test cases covering login, logout, and dashboard routing
+    \item Updates to the user manual and design documentation reflecting the new workflow
+\end{itemize}
+
+\subsection{Task Interfaces}
+
+\subsubsection{Scouting Interface}
+The scouting page presents a lunar image and asks the user to estimate how many
+rocks appear in the image or region. This step supports partitioning and helps prepare
+datasets for later tasks.
+
+\subsubsection{Sizing Interface}
+The sizing task provides drawing and measurement tools so users can select rocks and
+estimate dimensions. Features may include drag-and-drop rock selection, precision drawing,
+undo/redo, and save progress.
+
+\subsubsection{Classification Interface}
+The classification task highlights a rock outline and asks the user to choose the shape category
+that best matches the rock. The UI should support ambiguity handling (e.g., skip option)
+to avoid forcing uncertain classifications.
+
+\subsection{Validation and Submission Design}
+Validation occurs at multiple stages:
+\begin{itemize}
+    \item Client-side validation ensures required inputs are provided.
+    \item Server-side validation enforces data integrity and format.
+\end{itemize}
+
+\subsection{Supporting Dependencies}
+The task execution design relies on:
+\begin{itemize}
+    \item Interactive canvas or image-handling libraries
+    \item Validation utilities on both client and server
+\end{itemize}
+
+% ---------------- Database Design ----------------
+\section{Database Design}
+
+\subsection{Overview}
+The database is responsible for storing:
+\begin{itemize}
+    \item User authentication and profile data.
+    \item Task definitions and task image references.
+    \item User submissions for scouting, sizing, and classification.
+    \item Administrative metadata (e.g., aggregation status, audit trails).
+\end{itemize}
+
+\subsection{Conceptual Entities}
+Based on the project’s documented schema direction, core entities likely include:
+\begin{itemize}
+    \item \textbf{User/Account}
+    \item \textbf{Image}
+    \item \textbf{Task}
+    \item \textbf{TaskType}
+    \item \textbf{TaskData} (user submissions)
+\end{itemize}
+
+\subsection{Design Rationale}
+A relational approach supports strong data integrity and indexing for large datasets.
+The backend can issue SQL queries directly (via the web service layer) to optimize
+performance and reduce reliance on paid third-party tools.
+
+\section{Final Design Considerations}
+
+\subsection{System Refinements}
+Final refinements focus on improving usability, robustness, and consistency
+across the application. These refinements include clearer feedback during
+task completion, consistent navigation behavior, and improved session handling.
+
+\subsection{Final System Workflow}
+The finalized system workflow is:
+\begin{enumerate}
+    \item User registers or logs in.
+    \item User accesses the dashboard.
+    \item User selects and completes a task.
+    \item The system validates and stores task results.
+    \item The user receives confirmation feedback.
+\end{enumerate}
+
+\subsection{Testing and Documentation}
+The finalized design is supported by:
+\begin{itemize}
+    \item Comprehensive test cases covering end-to-end workflows
+    \item Finalized user documentation reflecting system behavior
+    \item Reflection documentation summarizing challenges and outcomes
+\end{itemize}
+
+\subsection{Additional Dependencies}
+Minor supporting utilities were introduced to improve reliability:
+\begin{itemize}
+    \item Logging utilities for error tracking
+    \item UI enhancements to improve accessibility and clarity
+\end{itemize}
+
+\subsection{Future Work}
+Several enhancements were identified but not implemented within the
+project timeline:
+\begin{itemize}
+    \item Administrative or analytics dashboards
+    \item Expert review or moderation workflows
+    \item Expanded task types and classification categories
+\end{itemize}
+
+% ---------------- Glossary ----------------
+\section{Glossary}
+
+\begin{longtable}{|p{3cm}|p{12cm}|}
+\hline
+\textbf{Term} & \textbf{Definition} \\
+\hline
+API & Application Programming Interface; defines how the frontend communicates with backend services. \\
+\hline
+UI & User Interface; the visual components users interact with. \\
+\hline
+DB & Database; persistent storage of system data. \\
+\hline
+ORM & Object Relational Mapper; a tool that maps objects in code to database tables. \\
+\hline
+PostGIS & A spatial database extension for PostgreSQL. \\
+\hline
+Tomcat & A Java application server used to deploy web services. \\
+\hline
+\end{longtable}
+
+% ---------------- References ----------------
+\section{References}
+\begin{itemize}
+    \item Internal project documentation and presentations.
+    \item PostgreSQL and PostGIS official documentation.
+    \item React and Vite official documentation.
+\end{itemize}
+
+\end{document}
